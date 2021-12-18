@@ -49,13 +49,12 @@ export default function Home() {
                     <option selected disabed value="">
                         Escolha um professor
                     </option>
-                    {teachers.length
-                        ? teachers.map((teacher, index) => (
-                              <option key={index} value={teacher.id}>
-                                  {`${teacher.name} (${teacher.exams} provas)`}
-                              </option>
-                          ))
-                        : null}
+                    {teachers &&
+                        teachers.map((teacher, index) => (
+                            <option key={index} value={teacher.id}>
+                                {`${teacher.name} (${teacher.exams} provas)`}
+                            </option>
+                        ))}
                 </select>
             ) : null}
 
@@ -64,17 +63,16 @@ export default function Home() {
                     <option selected disabed value="">
                         Escolha uma disciplina
                     </option>
-                    {subjects.length
-                        ? subjects.map((group) => (
-                              <optgroup label={`${group.period}º período`}>
-                                  {group.subjects.map((subject, index) => (
-                                      <option key={index} value={subject.id}>
-                                          {`${subject.name} (${subject.exams} provas)`}
-                                      </option>
-                                  ))}
-                              </optgroup>
-                          ))
-                        : null}
+                    {subjects.length &&
+                        subjects.map((group) => (
+                            <optgroup label={`${group.period}º período`}>
+                                {group.subjects.map((subject, index) => (
+                                    <option key={index} value={subject.id}>
+                                        {`${subject.name} (${subject.exams} provas)`}
+                                    </option>
+                                ))}
+                            </optgroup>
+                        ))}
                 </select>
             ) : null}
         </div>
