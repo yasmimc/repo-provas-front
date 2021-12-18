@@ -4,7 +4,7 @@ import API from "../../services/API/requests";
 export default function Home() {
     const [searchBy, setSearchBy] = useState(null);
     const [teachers, setTeachers] = useState([]);
-    const [subjects, setSubjects] = useState([]);
+    const [subjectsByPeriod, setSubjectsByPeriod] = useState([]);
 
     useEffect(() => {
         API.getTeachers()
@@ -17,7 +17,7 @@ export default function Home() {
 
         API.getSubjects()
             .then((resp) => {
-                setSubjects(resp.data);
+                setSubjectsByPeriod(resp.data);
             })
             .then((err) => {
                 console.error(err.response);
@@ -63,8 +63,8 @@ export default function Home() {
                     <option selected disabed value="">
                         Escolha uma disciplina
                     </option>
-                    {subjects.length &&
-                        subjects.map((group) => (
+                    {subjectsByPeriod.length &&
+                        subjectsByPeriod.map((group) => (
                             <optgroup label={`${group.period}º período`}>
                                 {group.subjects.map((subject, index) => (
                                     <option key={index} value={subject.id}>
