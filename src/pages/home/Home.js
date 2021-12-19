@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import GlobalContext from "../../contexts/globalContext";
 import API from "../../services/API/requests";
 
 export default function Home() {
@@ -8,7 +7,6 @@ export default function Home() {
     const [selectedValue, setSelectedValue] = useState(null);
     const [teachers, setTeachers] = useState([]);
     const [subjectsByPeriod, setSubjectsByPeriod] = useState([]);
-    // const { setExamsList } = useContext(GlobalContext);
     const [examsList, setExamsList] = useState([]);
 
     useEffect(() => {
