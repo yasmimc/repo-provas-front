@@ -147,7 +147,7 @@ export default function Home() {
                                         </li>
                                     ) : null}
                                     <li>
-                                        Link:{" "}
+                                        Link:
                                         <a
                                             href={exam.link}
                                             target="_blank"
