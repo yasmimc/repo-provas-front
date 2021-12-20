@@ -36,7 +36,13 @@ export default function NewExam() {
         arr = subjectsByPeriod.map((group) => group.subjects);
         let newArr = [];
         arr.forEach((array) => (newArr = newArr.concat(array)));
-        setSubjects(newArr);
+        setSubjects(
+            newArr.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name >= b.name) return 1;
+                return 0;
+            })
+        );
     }, [subjectsByPeriod]);
 
     function fetchTeachersBySubject(e) {
