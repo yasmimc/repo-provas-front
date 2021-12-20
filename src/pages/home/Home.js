@@ -117,7 +117,11 @@ export default function Home() {
                         </select>
                     ) : null}
                 </div>
-                <button type="submit" children="Buscar" />
+                <button
+                    disabled={!selectedValue}
+                    type="submit"
+                    children="Buscar"
+                />
             </form>
             {examsList.length > 0 && (
                 <div>
@@ -126,7 +130,11 @@ export default function Home() {
                             searchBy === "teacher"
                                 ? "aplicadas por "
                                 : "da disciplina de "
-                        }${selectedValue}`}
+                        }${
+                            searchBy === "teacher"
+                                ? examsList[0].exams[0].class.teacher.name
+                                : examsList[0].exams[0].class.subject.name
+                        }`}
                     </h1>
                     {examsList.map((group) => (
                         <>
