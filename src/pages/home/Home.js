@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import GlobalContext from "../../contexts/globalContext";
+import routes from "../../routes/routes";
 import API from "../../services/API/requests";
 
 export default function Home() {
     const [searchBy, setSearchBy] = useState(null);
     const [selectedValue, setSelectedValue] = useState(null);
     const [teachers, setTeachers] = useState([]);
-    const [subjectsByPeriod, setSubjectsByPeriod] = useState([]);
+    const { subjectsByPeriod, setSubjectsByPeriod } = useContext(GlobalContext);
     const [examsList, setExamsList] = useState([]);
 
     useEffect(() => {
@@ -50,6 +53,9 @@ export default function Home() {
 
     return (
         <Container>
+            <Link to={routes.newExam}>
+                <button>Cadastrar prova</button>
+            </Link>
             <form onSubmit={(e) => fetchExams(e)}>
                 <div>
                     <h1>Filtrar provas por:</h1>
