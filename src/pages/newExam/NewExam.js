@@ -8,11 +8,11 @@ export default function NewExam() {
     const [subjects, setSubjects] = useState([]);
     const [teachersBySubject, setTeachersBySubject] = useState([]);
     const [examInputs, setExamInputs] = useState({
-        name: null,
-        category: null,
-        subject: null,
-        teacher: null,
-        link: null,
+        name: "",
+        category: "",
+        subject: "",
+        teacher: "",
+        link: "",
     });
 
     useEffect(() => {
@@ -55,10 +55,25 @@ export default function NewExam() {
             (value) => value === null
         );
         if (emptyFields.length) {
+            alert("Por favor, preencha todos os campos");
             return;
         }
 
-        API.postExam(examInputs);
+        API.postExam(examInputs)
+            .then(() => {
+                setExamInputs({
+                    name: "",
+                    category: "",
+                    subject: "",
+                    teacher: "",
+                    link: "",
+                });
+                alert("Prova cadastrada com sucesso. Agradecemos sua ajuda!");
+            })
+            .catch((err) => {
+                if (err.response.status === 400)
+                    alert("Por favor, insira um link válido");
+            });
     }
 
     return (
@@ -66,18 +81,21 @@ export default function NewExam() {
             <input
                 type="text"
                 placeholder="Nome da prova"
+                value={examInputs.name}
                 onChange={(e) =>
                     setExamInputs({ ...examInputs, name: e.target.value })
                 }
             />
             <select
                 name="examCategories"
-                onChange={(e) =>
+                value={examInputs.category}
+                onChange={(e) => {
                     setExamInputs({
                         ...examInputs,
                         category: Number(e.target.value),
-                    })
-                }
+                    });
+                    setTeachersBySubject([]);
+                }}
             >
                 <option selected disabed value="">
                     Selecione a categoria
@@ -89,8 +107,11 @@ export default function NewExam() {
                         </option>
                     ))}
             </select>
-
-            <select name="subjects" onChange={fetchTeachersBySubject}>
+            <select
+                name="subjects"
+                value={examInputs.subject}
+                onChange={fetchTeachersBySubject}
+            >
                 <option selected disabed value="">
                     Selecione a disciplina
                 </option>
@@ -107,13 +128,14 @@ export default function NewExam() {
             </select>
             <select
                 name="teachers"
+                value={examInputs.teacher}
                 onChange={(e) =>
                     setExamInputs({
                         ...examInputs,
                         teacher: Number(e.target.value),
                     })
                 }
-                disabled={!teachersBySubject.length}
+                disabled={!teachersBySubject.length || !examInputs.subject}
             >
                 <option selected disabed value="">
                     Selecione o professor
@@ -132,6 +154,7 @@ export default function NewExam() {
             <input
                 type="text"
                 placeholder="Link do pdf"
+                value={examInputs.link}
                 onChange={(e) =>
                     setExamInputs({ ...examInputs, link: e.target.value })
                 }
